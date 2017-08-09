@@ -53,6 +53,8 @@ public class StatBarInstancerCacher {
 			instance = StatBarInstance.newOne(
 					bar.getId(), 
 					bar.getNetbarName(), 
+					bar.getApprovalNum(),
+					bar.getComputerNum(),
 					bar.getServerVersion(), 
 					bar.getClientVersion(), 
 					bar.getComputerNum()
@@ -87,6 +89,7 @@ public class StatBarInstancerCacher {
 		}
 		return list;
 	}
+	
 	
 	/**
 	 * 获取网吧在线统计信息
@@ -126,7 +129,7 @@ public class StatBarInstancerCacher {
 		if(null == bars || 0 == bars.size()) return;
 		
 		for(NetBar bar : bars) {
-			StatBarInstance instance = StatBarInstance.newOne(bar.getId(), bar.getNetbarName(), 
+			StatBarInstance instance = StatBarInstance.newOne(bar.getId(), bar.getNetbarName(), bar.getApprovalNum(),bar.getComputerNum(),
 					bar.getServerVersion(), bar.getClientVersion(), 0);//bar.getComputerNum()
 			
 			barInstanceCacher.put(bar.getId(), instance);

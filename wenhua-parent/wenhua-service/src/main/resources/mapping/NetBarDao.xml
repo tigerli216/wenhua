@@ -400,6 +400,9 @@
     <if test="userId !=null">
     	and ua.userId=#{userId}
     </if>
+    <if test="cityCode !=null and cityCode !=''">
+    	and b.city_code =#{cityCode}
+    </if>
   </select>
   
 </mapper>

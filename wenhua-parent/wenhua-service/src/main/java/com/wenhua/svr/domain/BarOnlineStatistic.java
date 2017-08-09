@@ -4,6 +4,8 @@ public class BarOnlineStatistic {
 
 	private String barId;
 	private String barName;
+	private String approvalNum;
+	private Integer computerNum;
 	private String statDate= "";
     private Integer offlineNum = 0;
     private Integer onlineNum = 0;
@@ -136,6 +138,18 @@ public class BarOnlineStatistic {
 	}
 	public void setPoweronMaxYsday(Integer poweronMaxYsday) {
 		this.poweronMaxYsday = poweronMaxYsday;
+	}
+	public String getApprovalNum() {
+		return approvalNum;
+	}
+	public void setApprovalNum(String approvalNum) {
+		this.approvalNum = approvalNum;
+	}
+	public Integer getComputerNum() {
+		return computerNum;
+	}
+	public void setComputerNum(Integer computerNum) {
+		this.computerNum = computerNum;
 	}
     
     

@@ -14,6 +14,8 @@ public class StatBarInstance {
 
 	private String barId;
 	private String barName;
+	private String approvalNum;
+	private Integer computerNum;
 	private String serverVersion;
 	private String clientVersion;
 	
@@ -31,10 +33,12 @@ public class StatBarInstance {
 	
 	private StatBarInstance() {}
 
-	public static StatBarInstance newOne(String barId, String barName, String serverVersion, String clientVersion, int clientTotal) {
+	public static StatBarInstance newOne(String barId, String barName,String approvalNum,Integer computerNum, String serverVersion, String clientVersion, int clientTotal) {
 		StatBarInstance instance = new StatBarInstance();
 		instance.setBarId(barId);
 		instance.setBarName(barName);
+		instance.setApprovalNum(approvalNum);
+		instance.setComputerNum(computerNum);
 		instance.setServerVersion(serverVersion);
 		instance.setClientVersion(clientVersion);
 		// 初始化网吧实时缓存信息, 初始化的离线终端数为该网吧终端总数
@@ -188,6 +192,22 @@ public class StatBarInstance {
 
 	public void setMaxLogin(int maxLogin) {
 		this.maxLogin = maxLogin;
+	}
+
+	public String getApprovalNum() {
+		return approvalNum;
+	}
+
+	public void setApprovalNum(String approvalNum) {
+		this.approvalNum = approvalNum;
+	}
+
+	public Integer getComputerNum() {
+		return computerNum;
+	}
+
+	public void setComputerNum(Integer computerNum) {
+		this.computerNum = computerNum;
 	}
 
 	@Override

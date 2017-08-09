@@ -192,7 +192,19 @@ public interface AuthService {
 	 */
 	public void updateStatNetBar(StatNetBar statNetBar);
 	
+	
+	/**
+	 * 查询用户下配置的城市编号
+	 * @param userId
+	 * @return
+	 */
 	public List<String> getCityCodesByUserId(Long userId);
+	/**
+	 * 查询用户下配置的区县编号
+	 * @param userId
+	 * @param cityCode
+	 * @return
+	 */
 	public List<String> getDistrictCodeByUserId(Long userId,String cityCode);
 	public List<String> getBarIdsByMap(Map<String, Object> queryMap);
 	
