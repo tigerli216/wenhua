@@ -7,6 +7,8 @@ public class StatBarVo {
 	private String barName;
 	private String approvalNum;
 	private Integer computerNum;
+	private Integer isdeployed;
+	
 	private int online;//在线终端数
 
 	private int offline;//离线终端数
@@ -19,12 +21,13 @@ public class StatBarVo {
 	private int onlineNumYsday; //昨日累计在线
 
 
-	public static StatBarVo newOne(String barId, String barName,String approvalNum,Integer computerNum, int online, int offline, int valid, String serverVersion) {
+	public static StatBarVo newOne(String barId, String barName,String approvalNum,Integer computerNum,Integer isdeployed, int online, int offline, int valid, String serverVersion) {
 		StatBarVo vo = new StatBarVo();
 		vo.setBarId(barId);
 		vo.setBarName(barName);
 		vo.setApprovalNum(approvalNum);
 		vo.setComputerNum(computerNum);
+		vo.setIsdeployed(isdeployed);
 		vo.setOnline(online);
 		vo.setOffline(offline);
 		vo.setValid(valid);
@@ -32,12 +35,13 @@ public class StatBarVo {
 		return vo;
 	}
 	
-	public static StatBarVo newOne(String barId, String barName,String approvalNum,Integer computerNum, int online, int offline, int onlineNumToday, int onlineNumYsday) {
+	public static StatBarVo newOne(String barId, String barName,String approvalNum,Integer computerNum,Integer isdeployed, int online, int offline, int onlineNumToday, int onlineNumYsday) {
 		StatBarVo vo = new StatBarVo();
 		vo.setBarId(barId);
 		vo.setBarName(barName);
 		vo.setApprovalNum(approvalNum);
 		vo.setComputerNum(computerNum);
+		vo.setIsdeployed(isdeployed);
 		vo.setOnline(online);
 		vo.setOffline(offline);
 		vo.setOnlineNumToday(onlineNumToday);
@@ -123,6 +127,14 @@ public class StatBarVo {
 
 	public void setComputerNum(Integer computerNum) {
 		this.computerNum = computerNum;
+	}
+
+	public Integer getIsdeployed() {
+		return isdeployed;
+	}
+
+	public void setIsdeployed(Integer isdeployed) {
+		this.isdeployed = isdeployed;
 	}
 
 }

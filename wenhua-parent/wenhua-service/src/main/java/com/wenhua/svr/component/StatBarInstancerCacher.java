@@ -20,6 +20,7 @@ import com.wenhua.svr.domain.StatBarInstance;
 import com.wenhua.svr.domain.StatNetBar;
 import com.wenhua.svr.service.AuthService;
 import com.wenhua.util.BarIdUtils;
+import com.wenhua.util.tools.CommonUtil;
 import com.wenhua.util.tools.DateUtils;
 
 /**
@@ -110,6 +111,25 @@ public class StatBarInstancerCacher {
 			for(String id:barIdList){
 				if(barId.equals(id)){
 					list.add(barInstanceCacher.get(barId));
+					break;
+				}
+			}
+		}
+		return list;
+	}
+//	private Integer isdeployed;
+	public static List<StatBarInstance> getBarsInMaps(List<Map<String, Object>> mapList){
+		List<StatBarInstance> list = new ArrayList<StatBarInstance>();
+		if(mapList==null|| mapList.size()==0)return list;
+		Set<String> barIds = barInstanceCacher.keySet();
+		for(String barId : barIds) {
+			for(Map<String, Object> map:mapList){
+				String id=CommonUtil.toString(map.get("id"));
+				String isdeployed=CommonUtil.toString(map.get("isdeployed"));
+				if(barId.equals(id)){
+					StatBarInstance stat=barInstanceCacher.get(barId);
+					stat.setIsdeployed(Integer.parseInt(isdeployed));
+					list.add(stat);
 					break;
 				}
 			}

@@ -207,5 +207,6 @@ public interface AuthService {
 	 */
 	public List<String> getDistrictCodeByUserId(Long userId,String cityCode);
 	public List<String> getBarIdsByMap(Map<String, Object> queryMap);
+	public List<Map<String, Object>> getBarMapInfos(Map<String, Object> queryMap);
 	
 }

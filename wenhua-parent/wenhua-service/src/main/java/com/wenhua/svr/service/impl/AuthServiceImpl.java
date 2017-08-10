@@ -457,6 +457,12 @@ public class AuthServiceImpl implements AuthService {
 		
 	}
 
+	@Override
+	public List<Map<String, Object>> getBarMapInfos(Map<String, Object> queryMap) {
+		// TODO Auto-generated method stub
+		return this.netBarDao.selectBarMapInfos(queryMap);
+	}
+
 	
 	
 }

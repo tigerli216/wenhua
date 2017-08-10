@@ -66,4 +66,6 @@ public interface NetBarDao {
     int countProvincePc();
     
     public List<String> selectBarIdsByMap(Map<String, Object> queryMap);
+    
+    public List<Map<String, Object>> selectBarMapInfos(Map<String, Object> queryMap);
 }

@@ -403,6 +403,37 @@
     <if test="cityCode !=null and cityCode !=''">
     	and b.city_code =#{cityCode}
     </if>
+    <if test="districtCode !=null and districtCode !=''">
+	    	and b.district_code=#{districtCode}
+	    </if>
+	    order by b.computer_num desc
   </select>
+  
+  	<select id="selectBarMapInfos" parameterType="map" resultType="map">
+	    select 
+	   distinct b.id,IFNULL(b.isdeployed,0) isdeployed
+	    from t_net_bar b
+	    <if test="userId !=null">
+	    	left join t_user_area ua on ua.districtCode=b.district_code
+	    </if>
+	    where 1=1
+	    <if test="keyword !=null and keyword !=''">
+	    	and (b.netbar_name like concat('%',#{keyword},'%')
+	    		or b.approval_num like concat('%',#{keyword},'%')
+	    		or b.id like concat('%',#{keyword},'%')
+	    	)
+	    </if>
+	    <if test="userId !=null">
+	    	and ua.userId=#{userId}
+	    </if>
+	    <if test="cityCode !=null and cityCode !=''">
+	    	and b.city_code =#{cityCode}
+	    </if>
+	    <if test="districtCode !=null and districtCode !=''">
+	    	and b.district_code=#{districtCode}
+	    </if>
+	    order by b.computer_num desc
+	  </select>
+  
   
 </mapper>

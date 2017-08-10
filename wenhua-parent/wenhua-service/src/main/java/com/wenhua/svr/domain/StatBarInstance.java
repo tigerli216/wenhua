@@ -18,7 +18,7 @@ public class StatBarInstance {
 	private Integer computerNum;
 	private String serverVersion;
 	private String clientVersion;
-	
+	private Integer isdeployed;
 	/** 实时参数 */
 	private int online = 0;
 	private int offline = 0;
@@ -208,6 +208,14 @@ public class StatBarInstance {
 
 	public void setComputerNum(Integer computerNum) {
 		this.computerNum = computerNum;
+	}
+
+	public Integer getIsdeployed() {
+		return isdeployed;
+	}
+
+	public void setIsdeployed(Integer isdeployed) {
+		this.isdeployed = isdeployed;
 	}
 
 	@Override
