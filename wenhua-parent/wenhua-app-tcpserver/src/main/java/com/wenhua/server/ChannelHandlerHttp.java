@@ -322,7 +322,13 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 		Map<String, Object> queryMap=new HashMap<String, Object>();
 		if(CommonUtil.isNotEmpty(districtCode)){
 //			list=this.getNetbarsInDistrictCode(districtCode);
-			queryMap.put("districtCode", districtCode);
+			Integer head=Integer.valueOf(districtCode.substring(0,4));
+			if(head>=4189){
+				queryMap.put("districtCodeLike", String.valueOf(head));
+			}else{
+				queryMap.put("districtCode", districtCode);
+			}
+			
 //			List<Map<String, Object>> maplist=this.authService.getBarMapInfos(queryMap);
 //			list=this.getNetbarStatisticsByMap(maplist);
 		//根据用户id查询	

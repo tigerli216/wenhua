@@ -404,9 +404,14 @@
     	and b.city_code =#{cityCode}
     </if>
     <if test="districtCode !=null and districtCode !=''">
-	    	and b.district_code=#{districtCode}
-	    </if>
-	   <!--  order by b.computer_num desc -->
+	    and b.district_code=#{districtCode}
+	</if>
+	<if test="districtCodeLike !=null and districtCodeLike !=''">
+	   	and b.district_code like concat(#{districtCodeLike} ,'%')
+	</if>
+	    <!-- order by b.computer_num desc -->
+	    
+	    
   </select>
   
   	<select id="selectBarMapInfos" parameterType="map" resultType="map">
@@ -432,7 +437,10 @@
 	    <if test="districtCode !=null and districtCode !=''">
 	    	and b.district_code=#{districtCode}
 	    </if>
-	    <!-- order by b.computer_num desc -->
+	    <if test="districtCodeLike !=null and districtCodeLike !=''">
+		   	and b.district_code like concat(#{districtCodeLike} ,'%')
+		</if>
+	   <!--  order by b.computer_num desc -->
 	  </select>
   
   
