@@ -209,4 +209,8 @@ public interface AuthService {
 	public List<String> getBarIdsByMap(Map<String, Object> queryMap);
 	public List<Map<String, Object>> getBarMapInfos(Map<String, Object> queryMap);
 	
+	public void updateServerInfo(ServerInfo info);
+	
+	public List<Map<String, Object>> getAllServerInfoStatistic();
+	
 }

@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.collect.Lists;
 import com.wenhua.svr.component.StatBarInstancerCacher;
 import com.wenhua.svr.dao.AreasCodeDao;
@@ -38,10 +41,11 @@ import com.wenhua.svr.exception.SystemException;
 import com.wenhua.svr.service.AuthService;
 import com.wenhua.util.BarIdUtils;
 import com.wenhua.util.constants.SystemConstant;
+import com.wenhua.util.tools.CommonUtil;
 
 public class AuthServiceImpl implements AuthService {
 	
-//	private Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger logger = LoggerFactory.getLogger(getClass());
 	private NetBarDao netBarDao;
 	
 	private ServerInfoDao serverInfoDao;
@@ -91,18 +95,29 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public void setServerInfo(ServerInfo serverInfo) throws AuthBarNotExistException {
-		if(null == serverInfo || null == serverInfo.getId()) return;
-		
+		if(null == serverInfo || null == serverInfo.getBarId()) return;
 		NetBar bar = netBarDao.selectByPrimaryKey(serverInfo.getBarId());
 		if(null == bar) {
 			throw new AuthBarNotExistException();
 		}
-
-		ServerInfo target = serverInfoDao.selectByPrimaryKey(serverInfo.getId());
+		ServerInfo target= this.serverInfoDao.selectByBarId(serverInfo.getBarId());
+//		ServerInfo target = serverInfoDao.selectByPrimaryKey(serverInfo.getId());
 		if(null == target) {
 			serverInfoDao.insert(serverInfo);
 		} else {
-			serverInfoDao.updateByPrimaryKey(serverInfo);
+			if(target.getMac().equals(serverInfo.getMac())
+					&& target.getIp().equals(serverInfo.getIp()) 
+					&& target.getPcName().equals(serverInfo.getIp())
+					&& target.getOsType().equals(serverInfo.getOsType())
+					&& target.getOsVersion().equals(serverInfo.getOsVersion())
+					&& target.getWenhuaVer().equals(serverInfo.getWenhuaVer())){
+				logger.info("上传服务器信息无变化");
+				return;
+			}else{
+				serverInfo.setId(target.getId());
+				this.serverInfoDao.updateByPrimaryKey(serverInfo);
+			}
+//			serverInfoDao.updateByPrimaryKey(serverInfo);
 		}
 		
 		bar.setServerVersion(serverInfo.getWenhuaVer());
@@ -461,6 +476,27 @@ public class AuthServiceImpl implements AuthService {
 	public List<Map<String, Object>> getBarMapInfos(Map<String, Object> queryMap) {
 		// TODO Auto-generated method stub
 		return this.netBarDao.selectBarMapInfos(queryMap);
+	}
+
+	@Override
+	public void updateServerInfo(ServerInfo info) {
+		// TODO Auto-generated method stub
+		if(CommonUtil.isEmpty(info.getBarId())){
+			logger.error("no bar id is upload.....");
+			return;
+		}
+		ServerInfo dbinfo= this.serverInfoDao.selectByBarId(info.getBarId());
+		if(dbinfo==null){
+			return;
+		}
+		info.setId(dbinfo.getId());
+		this.serverInfoDao.updateByPrimaryKeySelective(info);
+	}
+
+	@Override
+	public List<Map<String, Object>> getAllServerInfoStatistic() {
+		// TODO Auto-generated method stub
+		return this.serverInfoDao.selectAllServerInfoMap();
 	}
 
 	

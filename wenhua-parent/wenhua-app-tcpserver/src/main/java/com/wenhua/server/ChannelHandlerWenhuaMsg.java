@@ -38,12 +38,15 @@ import com.wenhua.svr.domain.BarFileInfo;
 import com.wenhua.svr.domain.BarOnlineStatistic;
 import com.wenhua.svr.domain.BarPcInstantInfo;
 import com.wenhua.svr.domain.NetBar;
+import com.wenhua.svr.enums.BusinessTypeEnum;
 import com.wenhua.svr.exception.AuthBarNotExistException;
 import com.wenhua.svr.exception.AuthBarNotValidException;
 import com.wenhua.svr.exception.AuthSignNotValidException;
 import com.wenhua.svr.exception.FileNotExistException;
 import com.wenhua.svr.exception.SystemException;
 import com.wenhua.svr.service.AuthService;
+import com.wenhua.svr.thread.ExecutorServiceUtil;
+import com.wenhua.svr.thread.impl.BarStatisticHandleThread;
 import com.wenhua.util.BarIdUtils;
 import com.wenhua.util.tools.JsonUtil;
 import com.wenhua.util.tools.NumberUtil;
@@ -121,6 +124,13 @@ public class ChannelHandlerWenhuaMsg extends ChannelInboundHandlerAdapter {
 			statistic.setOnlineNum(0);
 			statistic.setOfflineNum(0);
 			StatBarInstancerCacher.updateBarOnlineStatisticCache(statistic);
+			
+			//update installedNum to database
+			com.wenhua.svr.domain.ServerInfo info=com.wenhua.svr.domain.ServerInfo
+					.newOne(barId, statistic.getInstalledNum()==null?0:statistic.getInstalledNum());
+			ExecutorServiceUtil executor=new ExecutorServiceUtil();
+			executor.addThread(new BarStatisticHandleThread(authService, BusinessTypeEnum.ServerInfoUpdate, info));
+			executor.asyncExecute();
 		}
 		
 	}
@@ -787,6 +797,8 @@ public class ChannelHandlerWenhuaMsg extends ChannelInboundHandlerAdapter {
 		statistic.setPoweronMaxToday(s.getPoweronMaxToday());
 		statistic.setPoweronNumYsday(s.getPoweronNumYsday());
 		statistic.setPoweronMaxYsday(s.getPoweronMaxYsday());
+		
+		statistic.setInstalledNum(s.getOfflineNum() + s.getOnlineNum());
 		return statistic;
 	}
 	

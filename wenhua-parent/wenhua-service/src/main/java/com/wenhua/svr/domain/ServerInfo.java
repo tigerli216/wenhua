@@ -31,12 +31,20 @@ public class ServerInfo extends BaseServerInfo {
 		si.setCreateTime(new Date());
 		si.setBarId(barId);
 		si.setCreator(creator);
-		si.setId(mac);
+		si.setMac(mac);
 		si.setOsType(osType);
 		si.setOsVersion(osVersion);
 		si.setWenhuaVer(wenhuaVer);
 		si.setIp(ip);
 		si.setPcName(pcName);
+		si.setIsValid(1);
+		return si;
+	}
+	
+	public static ServerInfo newOne(String barId, Integer installedNum) {
+		ServerInfo si = new ServerInfo();
+		si.setBarId(barId);
+		si.setInstalledNum(installedNum);
 		return si;
 	}
 

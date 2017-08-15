@@ -6,6 +6,7 @@ public class BarOnlineStatistic {
 	private String barName;
 	private String approvalNum;
 	private Integer computerNum;
+	private Integer installedNum; // 新增，已安装终端, 页面上的"已安装终端" = BarOnlineStatistic.installedNum
 	private String statDate= "";
     private Integer offlineNum = 0;
     private Integer onlineNum = 0;
@@ -150,6 +151,12 @@ public class BarOnlineStatistic {
 	}
 	public void setComputerNum(Integer computerNum) {
 		this.computerNum = computerNum;
+	}
+	public Integer getInstalledNum() {
+		return installedNum;
+	}
+	public void setInstalledNum(Integer installedNum) {
+		this.installedNum = installedNum;
 	}
     
     

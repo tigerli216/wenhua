@@ -1,16 +1,17 @@
 package com.wenhua.svr.domain.base;
 
 import com.wenhua.svr.base.domain.AbstractEntity;
+
 import java.util.Date;
 
-public class BaseServerInfo extends AbstractEntity<String, BaseServerInfo> {
+public class BaseServerInfo extends AbstractEntity<Integer, BaseServerInfo> {
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
     private String barId;
-
+    private String mac;
     private String ip;
 
     private String pcName;
@@ -24,12 +25,16 @@ public class BaseServerInfo extends AbstractEntity<String, BaseServerInfo> {
     private String creator;
 
     private Date createTime;
+    
+    private Integer installedNum;
 
-    public String getId() {
+    private Integer isValid;
+
+    public Integer getId() {
         return super.getId();
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         super.setId(id);
     }
 
@@ -95,6 +100,30 @@ public class BaseServerInfo extends AbstractEntity<String, BaseServerInfo> {
 
 	public void setWenhuaVer(String wenhuaVer) {
 		this.wenhuaVer = wenhuaVer;
+	}
+
+	public String getMac() {
+		return mac;
+	}
+
+	public void setMac(String mac) {
+		this.mac = mac;
+	}
+
+	public Integer getInstalledNum() {
+		return installedNum;
+	}
+
+	public void setInstalledNum(Integer installedNum) {
+		this.installedNum = installedNum;
+	}
+
+	public Integer getIsValid() {
+		return isValid;
+	}
+
+	public void setIsValid(Integer isValid) {
+		this.isValid = isValid;
 	}
     
 }

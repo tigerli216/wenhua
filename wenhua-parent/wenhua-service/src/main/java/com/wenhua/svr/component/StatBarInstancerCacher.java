@@ -147,12 +147,27 @@ public class StatBarInstancerCacher {
 		logger.info(String.format("##update the bar cache [%d]", null == bars ? 0 : bars.size()));
 		
 		if(null == bars || 0 == bars.size()) return;
-		
+		List<Map<String, Object>> maplist= this.authService.getAllServerInfoStatistic();
 		for(NetBar bar : bars) {
 			StatBarInstance instance = StatBarInstance.newOne(bar.getId(), bar.getNetbarName(), bar.getApprovalNum(),bar.getComputerNum(),
 					bar.getServerVersion(), bar.getClientVersion(), 0);//bar.getComputerNum()
-			
 			barInstanceCacher.put(bar.getId(), instance);
+			if(CommonUtil.isNotEmpty(maplist)){
+				for(Map<String, Object> map:maplist){
+					String barId=map.get("barId").toString();
+					Object val=map.get("installedNum");
+					Integer installedNum=Integer.parseInt(val==null?"0":val.toString());
+					if(bar.getId().equals(barId)){
+						BarOnlineStatistic statis=new BarOnlineStatistic();
+						statis.setBarId(barId);
+						statis.setBarName(bar.getNetbarName());
+						statis.setApprovalNum(bar.getApprovalNum());
+						statis.setComputerNum(bar.getComputerNum());
+						statis.setInstalledNum(installedNum);
+						barOnlineStatisticCacher.put(barId, statis);
+					}
+				}
+			}
 		}
 	}
 	
