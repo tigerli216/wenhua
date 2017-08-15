@@ -406,7 +406,7 @@
     <if test="districtCode !=null and districtCode !=''">
 	    	and b.district_code=#{districtCode}
 	    </if>
-	    order by b.computer_num desc
+	   <!--  order by b.computer_num desc -->
   </select>
   
   	<select id="selectBarMapInfos" parameterType="map" resultType="map">
@@ -432,7 +432,7 @@
 	    <if test="districtCode !=null and districtCode !=''">
 	    	and b.district_code=#{districtCode}
 	    </if>
-	    order by b.computer_num desc
+	    <!-- order by b.computer_num desc -->
 	  </select>
   
   
