@@ -31,6 +31,7 @@ import com.wenhua.svr.exception.AuthBarNotValidException;
 import com.wenhua.svr.service.AuthService;
 import com.wenhua.util.BarIdUtils;
 import com.wenhua.util.base.AjaxResult;
+import com.wenhua.util.constants.SystemConstant;
 import com.wenhua.util.tools.CommonUtil;
 
 import io.netty.buffer.Unpooled;
@@ -354,14 +355,26 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 	 */
 	private List<Object> getNetbarsInDistrictCode(String districtCode){
 		List<Object> list=new ArrayList<Object>();
-		List<StatBarInstance> bars = StatBarInstancerCacher.getBarInArea(districtCode);
+//		List<StatBarInstance> bars = StatBarInstancerCacher.getBarInArea(districtCode);
+		Map<String, Object> queryMap=new HashMap<String, Object>();
+		Integer head=Integer.valueOf(districtCode.substring(0,4));
+		if(head>=SystemConstant.District_Head){
+			queryMap.put("districtCodeLike", String.valueOf(head));
+		}else{
+			queryMap.put("districtCode", districtCode);
+		}
+		List<String> barIds = this.authService.getBarIdsByMap(queryMap);
+		List<StatBarInstance> bars = StatBarInstancerCacher.getBarsInIds(barIds);
 		for(StatBarInstance bar : bars) {
 			BarOnlineStatistic barStatistic= StatBarInstancerCacher.getBarOnLineStatisticsFromCache(bar.getBarId());
+			int isOnline=0;
+			ChannelHandlerContext chc=ChannelGroups.getChannelContext(bar.getBarId());
+			if(chc!=null)isOnline=1;
 			if(barStatistic!=null){
-				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),
+				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline,
 						barStatistic.getOnlineNum(), barStatistic.getOfflineNum(), barStatistic.getOnlineNumToday(), barStatistic.getOnlineNumYsday()));
 			}else{
-				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(), 0, 0,0, 0));
+				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline, 0, 0,0, 0));
 			}
 		}
 		return list;
@@ -373,8 +386,9 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 		String type=areaCode;
 		String keyword=paramMap.get("keyword");
 		String userIdStr=paramMap.get("userId");
+		Map<String, Object> queryMap = new HashMap<String, Object>();
 		if("code".equals(type)){//编号查询
-			List<StatBarInstance> bars = StatBarInstancerCacher.getBarInArea(keyword);
+			/*List<StatBarInstance> bars = StatBarInstancerCacher.getBarInArea(keyword);
 			for(StatBarInstance bar : bars) {
 				BarOnlineStatistic barStatistic= StatBarInstancerCacher.getBarOnLineStatisticsFromCache(bar.getBarId());
 				if(barStatistic!=null){
@@ -383,18 +397,24 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 				}else{
 					list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(), 0, 0,0, 0));
 				}
-//				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(), bar.getOnline(), bar.getOffline(), bar.getValid(), bar.getServerVersion()));
+			}*/
+			Integer head=Integer.valueOf(keyword.substring(0,4));
+			if(head>=SystemConstant.District_Head){
+				queryMap.put("districtCodeLike", String.valueOf(head));
+			}else{
+				queryMap.put("districtCode", keyword);
 			}
+			
 		}else{
 			// 关键字
-			Map<String, Object> queryMap = new HashMap<String, Object>();
 			queryMap.put("keyword", keyword);
 			if (userIdStr != null && !"".equals(userIdStr)) {
 				queryMap.put("userId", Long.valueOf(userIdStr));
 			} 
-			List<String> barIds = this.authService.getBarIdsByMap(queryMap);
-			list=this.getNetbarStatisticsByIds(barIds);
+			
 		}
+		List<String> barIds = this.authService.getBarIdsByMap(queryMap);
+		list=this.getNetbarStatisticsByIds(barIds);
 		return list;
 	}
 	
@@ -407,11 +427,14 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 		List<StatBarInstance> bars = StatBarInstancerCacher.getBarsInIds(barIds);
 		for (StatBarInstance bar : bars) {
 			BarOnlineStatistic barStatistic= StatBarInstancerCacher.getBarOnLineStatisticsFromCache(bar.getBarId());
+			int isOnline=0;
+			ChannelHandlerContext chc=ChannelGroups.getChannelContext(bar.getBarId());
+			if(chc!=null)isOnline=1;
 			if(barStatistic!=null){
-				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),
+				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline,
 						barStatistic.getOnlineNum(), barStatistic.getOfflineNum(), barStatistic.getOnlineNumToday(), barStatistic.getOnlineNumYsday()));
 			}else{
-				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(), 0, 0,0, 0));
+				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline, 0, 0,0, 0));
 			}
 		}
 		return list;
@@ -423,11 +446,14 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 		List<StatBarInstance> bars = StatBarInstancerCacher.getBarsInMaps(barMaps);
 		for (StatBarInstance bar : bars) {
 			BarOnlineStatistic barStatistic= StatBarInstancerCacher.getBarOnLineStatisticsFromCache(bar.getBarId());
+			int isOnline=0;
+			ChannelHandlerContext chc=ChannelGroups.getChannelContext(bar.getBarId());
+			if(chc!=null)isOnline=1;
 			if(barStatistic!=null){
-				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),
+				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline,
 						barStatistic.getOnlineNum(), barStatistic.getOfflineNum(), barStatistic.getOnlineNumToday(), barStatistic.getOnlineNumYsday()));
 			}else{
-				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(), 0, 0,0, 0));
+				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline, 0, 0,0, 0));
 			}
 		}
 		return list;
@@ -438,16 +464,29 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 		if(areaCode==null || "".equals(areaCode) 
 				|| barId==null || "".equals(barId)
 				)return null;
-		List<StatBarInstance> bars = StatBarInstancerCacher.getBarInArea(areaCode);
+//		List<StatBarInstance> bars = StatBarInstancerCacher.getBarInArea(areaCode);
+		Map<String, Object> queryMap=new HashMap<String, Object>();
+		Integer head=Integer.valueOf(areaCode.substring(0,4));
+		if(head>=SystemConstant.District_Head){
+			queryMap.put("districtCodeLike", String.valueOf(head));
+		}else{
+			queryMap.put("districtCode", areaCode);
+		}
+		List<String> barIds = this.authService.getBarIdsByMap(queryMap);
+		List<StatBarInstance> bars = StatBarInstancerCacher.getBarsInIds(barIds);
+		
 		for(StatBarInstance bar : bars) {
 			if(barId.equals(bar.getBarId())){
 				StatBarVo vo=null;
 				BarOnlineStatistic barStatistic= StatBarInstancerCacher.getBarOnLineStatisticsFromCache(bar.getBarId());
+				int isOnline=0;
+				ChannelHandlerContext chc=ChannelGroups.getChannelContext(bar.getBarId());
+				if(chc!=null)isOnline=1;
 				if(barStatistic!=null){
-					vo=StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),
+					vo=StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline,
 							barStatistic.getOnlineNum(), barStatistic.getOfflineNum(), barStatistic.getOnlineNumToday(), barStatistic.getOnlineNumYsday());
 				}else{
-					vo=StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(), 0, 0,0, 0);
+					vo=StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline, 0, 0,0, 0);
 				}
 				return vo;
 			}

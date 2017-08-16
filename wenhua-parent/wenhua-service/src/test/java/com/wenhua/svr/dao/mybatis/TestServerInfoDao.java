@@ -39,7 +39,7 @@ public class TestServerInfoDao {
 	public void test3() {
 		
 		ServerInfo serverInfo = getServerInfo();
-		serverInfo.setId("27956843");
+//		serverInfo.setId("27956843");
 		serverInfo.setOsVersion("WIN8");
 		serverInfo.setWenhuaVer("WENHUA_VER_2");
 		serverInfoDao.updateByPrimaryKey(serverInfo);
@@ -48,7 +48,7 @@ public class TestServerInfoDao {
 	@Test
 	public void test2() {
 		ServerInfo serverInfo = getServerInfo();
-		serverInfo.setId("AA-BB-CC-DD-EE-FF");
+//		serverInfo.setId("AA-BB-CC-DD-EE-FF");
 		serverInfo.setIp("hello world11111");
 		
 		serverInfoDao.updateByPrimaryKey(serverInfo);

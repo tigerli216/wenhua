@@ -3,6 +3,7 @@ package com.wenhua.svr.component;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -80,14 +81,23 @@ public class StatBarInstancerCacher {
 	 * @param areaCode
 	 * @return
 	 */
-	public static List<StatBarInstance> getBarInArea(String areaCode) {
+	public static List<StatBarInstance> getBarInArea(List<String> barIds) {
 		List<StatBarInstance> list = new ArrayList<StatBarInstance>();
-		if(null == areaCode || !AreasCode.isValidCode(areaCode)) return list;
+		/*if(null == areaCode || !AreasCode.isValidCode(areaCode)) return list;
+		Map<String, Object> queryMap=new HashMap<String, Object>();
 		Set<String> barIds = barInstanceCacher.keySet();
 		for(String barId : barIds) {
 			if(!AreasCode.isBarMine(areaCode, barId)) continue;
 			list.add(barInstanceCacher.get(barId));
+		}*/
+		if(CommonUtil.isNotEmpty(barIds)){
+			for(String barId:barIds){
+				StatBarInstance stat= barInstanceCacher.get(barId);
+				if(stat!=null)
+				list.add(stat);
+			}
 		}
+		
 		return list;
 	}
 	
