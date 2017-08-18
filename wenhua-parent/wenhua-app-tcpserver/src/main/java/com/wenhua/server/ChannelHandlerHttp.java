@@ -371,10 +371,10 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 			ChannelHandlerContext chc=ChannelGroups.getChannelContext(bar.getBarId());
 			if(chc!=null)isOnline=1;
 			if(barStatistic!=null){
-				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline,
+				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),barStatistic.getInstalledNum(),bar.getIsdeployed(),isOnline,
 						barStatistic.getOnlineNum(), barStatistic.getOfflineNum(), barStatistic.getOnlineNumToday(), barStatistic.getOnlineNumYsday()));
 			}else{
-				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline, 0, 0,0, 0));
+				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),0,bar.getIsdeployed(),isOnline, 0, 0,0, 0));
 			}
 		}
 		return list;
@@ -431,10 +431,10 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 			ChannelHandlerContext chc=ChannelGroups.getChannelContext(bar.getBarId());
 			if(chc!=null)isOnline=1;
 			if(barStatistic!=null){
-				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline,
+				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),barStatistic.getInstalledNum(),bar.getIsdeployed(),isOnline,
 						barStatistic.getOnlineNum(), barStatistic.getOfflineNum(), barStatistic.getOnlineNumToday(), barStatistic.getOnlineNumYsday()));
 			}else{
-				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline, 0, 0,0, 0));
+				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),0,bar.getIsdeployed(),isOnline, 0, 0,0, 0));
 			}
 		}
 		return list;
@@ -450,10 +450,10 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 			ChannelHandlerContext chc=ChannelGroups.getChannelContext(bar.getBarId());
 			if(chc!=null)isOnline=1;
 			if(barStatistic!=null){
-				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline,
+				list.add(StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),barStatistic.getInstalledNum(),bar.getIsdeployed(),isOnline,
 						barStatistic.getOnlineNum(), barStatistic.getOfflineNum(), barStatistic.getOnlineNumToday(), barStatistic.getOnlineNumYsday()));
 			}else{
-				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline, 0, 0,0, 0));
+				list.add(StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),0,bar.getIsdeployed(),isOnline, 0, 0,0, 0));
 			}
 		}
 		return list;
@@ -483,10 +483,10 @@ public class ChannelHandlerHttp extends ChannelInboundHandlerAdapter {
 				ChannelHandlerContext chc=ChannelGroups.getChannelContext(bar.getBarId());
 				if(chc!=null)isOnline=1;
 				if(barStatistic!=null){
-					vo=StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline,
+					vo=StatBarVo.newOne(barStatistic.getBarId(), barStatistic.getBarName(), bar.getApprovalNum(),bar.getComputerNum(),barStatistic.getInstalledNum(),bar.getIsdeployed(),isOnline,
 							barStatistic.getOnlineNum(), barStatistic.getOfflineNum(), barStatistic.getOnlineNumToday(), barStatistic.getOnlineNumYsday());
 				}else{
-					vo=StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),bar.getIsdeployed(),isOnline, 0, 0,0, 0);
+					vo=StatBarVo.newOne(bar.getBarId(), bar.getBarName(),bar.getApprovalNum(),bar.getComputerNum(),0,bar.getIsdeployed(),isOnline, 0, 0,0, 0);
 				}
 				return vo;
 			}

@@ -1,5 +1,9 @@
 package com.wenhua.svr.domain;
 
+import java.util.Date;
+
+import com.wenhua.util.tools.DateUtils;
+
 public class BarOnlineStatistic {
 
 	private String barId;
@@ -160,5 +164,30 @@ public class BarOnlineStatistic {
 	}
     
     
+	
+	
+	public void clearData(){
+		String curDate=DateUtils.getString(new Date(), DateUtils.DATE_FORMAT);
+		if(curDate.equals(this.getStatDate())){
+			return;
+		}else{
+			offlineNum = 0;
+			onlineNum = 0;
+			onlineNumToday = 0;
+			onlineMaxToday = 0;
+			onlineNumYsday = 0;
+			onlineMaxYsday = 0;
+			userNum = 0;
+			userNumToday = 0;
+			userMaxToday = 0;
+			userNumYsday = 0;
+			userMaxYsday = 0;
+			poweronNum = 0;
+			poweronNumToday = 0;
+			poweronMaxToday = 0;
+			poweronNumYsday = 0;
+			poweronMaxYsday = 0;
+		}
+	}
 	
 }

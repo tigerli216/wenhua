@@ -108,6 +108,11 @@ public class StatAreaInstanceCacher {
 		logger.info("##Rest the max value of area instance over.");
 	}
 	
+	
+	
+	
+	
+	
 	public void init() {
 		List<AreasCode> list = authService.selectAllAreasCode();
 		logger.info(String.format("##init the area cache [%d]", null == list ? 0 : list.size()));
@@ -367,7 +372,7 @@ public class StatAreaInstanceCacher {
 			provinceCurrent = provinceInstance.online(barId);
 		}
 		try {
-			System.out.println(String.format(
+			/*System.out.println(String.format(
 							"##ActiveBar id: %s,Province: %s %s CurrentActive Bar: %d Area: %s %s CurrentActive Bar: %d City: %s %s CurrentActive Bar: %d", 
 							barId,
 							provinceCode,
@@ -379,7 +384,7 @@ public class StatAreaInstanceCacher {
 							cityCode,
 							cityInstance==null?"cityCode"+cityCode+"无数据":cityInstance.getName(),
 							cityCurrent
-							));
+							));*/
 			logger.info(
 					String.format(
 							"##ActiveBar id: %s,Province: %s %s CurrentActive Bar: %d Area: %s %s CurrentActive Bar: %d City: %s %s CurrentActive Bar: %d", 
@@ -428,7 +433,7 @@ public class StatAreaInstanceCacher {
 			provinceCurrent = provinceInstance.offline(barId);
 		}
 		try {
-			System.out.println(String.format(
+			/*System.out.println(String.format(
 							"##InactiveBar id: %s, Province: %s %s CurrentActive Bar: %d Area: %s %s CurrentActive Bar: %d City: %s %s CurrentActive Bar: %d", 
 							barId,
 							provinceCode,
@@ -440,7 +445,7 @@ public class StatAreaInstanceCacher {
 							cityCode,
 							cityInstance==null?"cityCode"+cityCode+"无数据":cityInstance.getName(),
 							cityCurrent
-							));
+							));*/
 			logger.info(
 					String.format(
 							"##InactiveBar id: %s, Province: %s %s CurrentActive Bar: %d Area: %s %s CurrentActive Bar: %d City: %s %s CurrentActive Bar: %d", 

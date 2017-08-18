@@ -10,6 +10,7 @@ public class StatBarVo {
 	private Integer isdeployed;
 	private Integer isOnline;//是否在线 1-是 0-否
 	
+	private Integer installedNum;
 	private int online;//在线终端数
 
 	private int offline;//离线终端数
@@ -22,12 +23,13 @@ public class StatBarVo {
 	private int onlineNumYsday; //昨日累计在线
 
 
-	public static StatBarVo newOne(String barId, String barName,String approvalNum,Integer computerNum,Integer isdeployed,Integer isOnline, int online, int offline, int valid, String serverVersion) {
+	public static StatBarVo newOne(String barId, String barName,String approvalNum,Integer computerNum,Integer installedNum,Integer isdeployed,Integer isOnline, int online, int offline, int valid, String serverVersion) {
 		StatBarVo vo = new StatBarVo();
 		vo.setBarId(barId);
 		vo.setBarName(barName);
 		vo.setApprovalNum(approvalNum);
 		vo.setComputerNum(computerNum);
+		vo.setInstalledNum(installedNum);
 		vo.setIsOnline(isOnline);
 		vo.setIsdeployed(isdeployed);
 		vo.setOnline(online);
@@ -37,12 +39,13 @@ public class StatBarVo {
 		return vo;
 	}
 	
-	public static StatBarVo newOne(String barId, String barName,String approvalNum,Integer computerNum,Integer isdeployed,Integer isOnline, int online, int offline, int onlineNumToday, int onlineNumYsday) {
+	public static StatBarVo newOne(String barId, String barName,String approvalNum,Integer computerNum,Integer installedNum,Integer isdeployed,Integer isOnline, int online, int offline, int onlineNumToday, int onlineNumYsday) {
 		StatBarVo vo = new StatBarVo();
 		vo.setBarId(barId);
 		vo.setBarName(barName);
 		vo.setApprovalNum(approvalNum);
 		vo.setComputerNum(computerNum);
+		vo.setInstalledNum(installedNum);
 		vo.setIsdeployed(isdeployed);
 		vo.setIsOnline(isOnline);
 		vo.setOnline(online);
@@ -146,6 +149,14 @@ public class StatBarVo {
 
 	public void setIsOnline(Integer isOnline) {
 		this.isOnline = isOnline;
+	}
+
+	public Integer getInstalledNum() {
+		return installedNum;
+	}
+
+	public void setInstalledNum(Integer installedNum) {
+		this.installedNum = installedNum;
 	}
 
 }

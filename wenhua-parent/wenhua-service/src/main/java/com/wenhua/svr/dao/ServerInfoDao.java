@@ -18,7 +18,7 @@ public interface ServerInfoDao {
 
     int updateByPrimaryKey(ServerInfo record);
     
-    ServerInfo selectByBarId(String barId);
+    List<ServerInfo> selectByBarId(String barId);
     
     List<Map<String, Object>> selectAllServerInfoMap();
 }

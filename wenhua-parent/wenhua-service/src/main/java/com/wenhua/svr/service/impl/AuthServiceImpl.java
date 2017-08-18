@@ -100,11 +100,12 @@ public class AuthServiceImpl implements AuthService {
 		if(null == bar) {
 			throw new AuthBarNotExistException();
 		}
-		ServerInfo target= this.serverInfoDao.selectByBarId(serverInfo.getBarId());
+		List<ServerInfo> targets= this.serverInfoDao.selectByBarId(serverInfo.getBarId());
 //		ServerInfo target = serverInfoDao.selectByPrimaryKey(serverInfo.getId());
-		if(null == target) {
+		if(CommonUtil.isEmpty(targets)) {
 			serverInfoDao.insert(serverInfo);
 		} else {
+			ServerInfo target=targets.get(0);
 			if(target.getMac().equals(serverInfo.getMac())
 					&& target.getIp().equals(serverInfo.getIp()) 
 					&& target.getPcName().equals(serverInfo.getIp())
@@ -485,10 +486,11 @@ public class AuthServiceImpl implements AuthService {
 			logger.error("no bar id is upload.....");
 			return;
 		}
-		ServerInfo dbinfo= this.serverInfoDao.selectByBarId(info.getBarId());
-		if(dbinfo==null){
+		List<ServerInfo> dbinfos= this.serverInfoDao.selectByBarId(info.getBarId());
+		if(CommonUtil.isEmpty(dbinfos)){
 			return;
 		}
+		ServerInfo dbinfo=dbinfos.get(0);
 		info.setId(dbinfo.getId());
 		this.serverInfoDao.updateByPrimaryKeySelective(info);
 	}

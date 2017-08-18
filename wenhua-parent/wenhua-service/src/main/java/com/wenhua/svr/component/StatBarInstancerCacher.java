@@ -196,6 +196,23 @@ public class StatBarInstancerCacher {
 		logger.info("##Rest the max value of bar instance over.");
 	}
 	
+	
+//	每到新的一天，即刚过24:05:00，遍历barOnlineStatisticCacher做一次以下处理，对于每个BarOnlineStatistic：
+//	1.	如果statDate等于今日，则不作处理
+//	2.	如果statDate不等于今日，则:
+	public void resetBarOnlineStatistics(){
+		logger.info("start reset barOnlineStatisticCacher .....");
+		Collection<BarOnlineStatistic> statlist= barOnlineStatisticCacher.values();
+		if(CommonUtil.isNotEmpty(statlist)){
+			for(BarOnlineStatistic stat:statlist){
+				stat.clearData();
+			}
+		}else{
+			logger.info("no cache data in barOnlineStatisticCacher....");
+		}
+	}
+	
+	
 	/**
 	 * 定时將实时信息中的最大值保存到数据库中
 	 */
