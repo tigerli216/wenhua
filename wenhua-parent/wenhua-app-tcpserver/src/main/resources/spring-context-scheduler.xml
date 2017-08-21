@@ -93,7 +93,6 @@
             <value>resetMax</value>  
         </property>  
     </bean>  
-      
     <bean id="trigger-05" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
         <property name="jobDetail">  
             <ref bean="jobDetail-05"/>  
@@ -102,6 +101,25 @@
             <value>${scheduler.interval5}</value>  
         </property>  
     </bean>
+    
+    
+    <bean id="jobDetail-06" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">  
+        <property name="targetObject">  
+            <ref bean="statBarInstancerCacher"/>  
+        </property>  
+        <property name="targetMethod">  
+            <value>resetBarOnlineStatistics</value>  
+        </property>  
+    </bean>  
+    <bean id="trigger-06" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">  
+        <property name="jobDetail">  
+            <ref bean="jobDetail-06"/>  
+        </property>  
+        <property name="cronExpression">  
+            <value>${scheduler.interval6}</value>  
+        </property>  
+    </bean>
+    
       
     <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
         <property name="triggers">  
@@ -113,6 +131,7 @@
                 <ref bean="trigger-03"/>
                 <ref bean="trigger-04"/>  
                 <ref bean="trigger-05"/>  
+                <ref bean="trigger-06"/>  
             </list>  
         </property>  
         <property name="autoStartup" value="true"></property>  

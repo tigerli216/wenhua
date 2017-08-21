@@ -18,7 +18,7 @@ import com.wenhua.svr.domain.StatAreaInstanceArea;
 import com.wenhua.svr.domain.StatAreaInstanceCity;
 import com.wenhua.svr.domain.StatAreaInstanceProvince;
 import com.wenhua.svr.service.AuthService;
-import com.wenhua.util.BarIdUtils;
+import com.wenhua.svr.utils.BarIdUtils;
 import com.wenhua.util.tools.DateUtils;
 
 /**

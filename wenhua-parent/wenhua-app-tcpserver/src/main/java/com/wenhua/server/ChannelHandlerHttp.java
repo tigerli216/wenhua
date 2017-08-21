@@ -29,7 +29,7 @@ import com.wenhua.svr.domain.StatBarInstance;
 import com.wenhua.svr.exception.AuthBarNotExistException;
 import com.wenhua.svr.exception.AuthBarNotValidException;
 import com.wenhua.svr.service.AuthService;
-import com.wenhua.util.BarIdUtils;
+import com.wenhua.svr.utils.BarIdUtils;
 import com.wenhua.util.base.AjaxResult;
 import com.wenhua.util.constants.SystemConstant;
 import com.wenhua.util.tools.CommonUtil;

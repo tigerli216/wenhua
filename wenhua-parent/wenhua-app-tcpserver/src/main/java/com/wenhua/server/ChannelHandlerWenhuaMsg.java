@@ -47,7 +47,7 @@ import com.wenhua.svr.exception.SystemException;
 import com.wenhua.svr.service.AuthService;
 import com.wenhua.svr.thread.ExecutorServiceUtil;
 import com.wenhua.svr.thread.impl.BarStatisticHandleThread;
-import com.wenhua.util.BarIdUtils;
+import com.wenhua.svr.utils.BarIdUtils;
 import com.wenhua.util.tools.JsonUtil;
 import com.wenhua.util.tools.NumberUtil;
 

@@ -20,7 +20,6 @@ import com.wenhua.svr.domain.NetBar;
 import com.wenhua.svr.domain.StatBarInstance;
 import com.wenhua.svr.domain.StatNetBar;
 import com.wenhua.svr.service.AuthService;
-import com.wenhua.util.BarIdUtils;
 import com.wenhua.util.tools.CommonUtil;
 import com.wenhua.util.tools.DateUtils;
 
@@ -36,6 +35,8 @@ public class StatBarInstancerCacher {
 	/** BarId : 网吧实时信息 */
 	private static final Map<String, StatBarInstance> barInstanceCacher = new ConcurrentHashMap<String, StatBarInstance>();
 	private static final Map<String, BarOnlineStatistic> barOnlineStatisticCacher=new ConcurrentHashMap<String,BarOnlineStatistic>();
+	/** 网吧缓存信息    **/
+	private static final Map<String, NetBar> netBarInfoCacher=new ConcurrentHashMap<>();
 	
 	/** 单位分钟 文化客户端需要运行的时间 */
 	private static int wenhuaDuration = 60;
@@ -51,6 +52,8 @@ public class StatBarInstancerCacher {
 	 */
 	public static void addOrUpdate(NetBar bar) {
 		StatBarInstance instance = barInstanceCacher.get(bar.getId());
+//		NetBar nb=netBarInfoCacher.get(bar.getId());
+		netBarInfoCacher.put(bar.getId(), bar);
 		if(null == instance) {
 			instance = StatBarInstance.newOne(
 					bar.getId(), 
@@ -74,6 +77,17 @@ public class StatBarInstancerCacher {
 
 		}
 		logger.debug(String.format("##StatBarInstance of barId[%s] is : %s", bar.getId(), instance.toString()));
+	}
+	
+	
+	/**
+	 * 从缓存中获取网吧信息
+	 * @param barId
+	 * @return
+	 */
+	public static NetBar getNetBarFromCacher(String barId){
+		if(barId==null || "".equals(barId))return null;
+		return netBarInfoCacher.get(barId);
 	}
 	
 	/**
@@ -159,6 +173,7 @@ public class StatBarInstancerCacher {
 		if(null == bars || 0 == bars.size()) return;
 		List<Map<String, Object>> maplist= this.authService.getAllServerInfoStatistic();
 		for(NetBar bar : bars) {
+			netBarInfoCacher.put(bar.getId(), bar);
 			StatBarInstance instance = StatBarInstance.newOne(bar.getId(), bar.getNetbarName(), bar.getApprovalNum(),bar.getComputerNum(),
 					bar.getServerVersion(), bar.getClientVersion(), 0);//bar.getComputerNum()
 			barInstanceCacher.put(bar.getId(), instance);
@@ -255,7 +270,7 @@ public class StatBarInstancerCacher {
 	 * @param isDeleted 网吧是否被删除了
 	 */
 	public static StatBarInstance updateCache(String barId, List<BarPcInstantInfo> infos, boolean isDeleted) {
-		if(!BarIdUtils.isValid(barId)) {
+		if(!com.wenhua.svr.utils.BarIdUtils.isValid(barId)) {
 			logger.warn(String.format("##Invalid barId: %s", barId));
 			return null;
 		}
@@ -286,7 +301,7 @@ public class StatBarInstancerCacher {
 	 * @param statistic
 	 */
 	public static void updateBarOnlineStatisticCache(BarOnlineStatistic statistic) {
-		if(!BarIdUtils.isValid(statistic.getBarId())) {
+		if(!com.wenhua.svr.utils.BarIdUtils.isValid(statistic.getBarId())) {
 			logger.warn(String.format("##Invalid barId: %s", statistic.getBarId()));
 			return;
 		}

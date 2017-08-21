@@ -1,7 +1,7 @@
 package com.wenhua.svr.domain;
 
 import com.wenhua.svr.domain.base.BaseAreasCode;
-import com.wenhua.util.BarIdUtils;
+import com.wenhua.svr.utils.BarIdUtils;
 import com.wenhua.util.constants.SystemConstant;
 
 public class AreasCode extends BaseAreasCode {
@@ -65,7 +65,7 @@ public class AreasCode extends BaseAreasCode {
 		if(isCity()) {
 			if(SystemConstant.District_Center.equals(this.getAreasid())){
 				int head=Integer.valueOf(code.substring(0,4));
-				return head>=4189;
+				return head>=SystemConstant.District_Head;
 			}else{
 				return this.getAreasid().substring(0, 4).equals(code.substring(0, 4));
 			}

@@ -39,7 +39,7 @@ import com.wenhua.svr.exception.AuthSignNotValidException;
 import com.wenhua.svr.exception.FileNotExistException;
 import com.wenhua.svr.exception.SystemException;
 import com.wenhua.svr.service.AuthService;
-import com.wenhua.util.BarIdUtils;
+import com.wenhua.svr.utils.BarIdUtils;
 import com.wenhua.util.constants.SystemConstant;
 import com.wenhua.util.tools.CommonUtil;
 
